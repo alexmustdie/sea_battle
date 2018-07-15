@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Sea battle</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.js" charset="utf-8"></script>
+    <script>
+        $(document).ready(function () {
+            var space = 1;
+            for (var i = 0; i <= 10; i++) {
+                var col = "";
+                for (var j = 0; j <= 10; j++) {
+                    if (i === 0 && j !== 0) {
+                        col += "<td data-pos='" + space + "' align='center'>" + j + "</td>";
+                    } else if (j === 0 && i !== 0) {
+                        col += "<td data-pos='" + space + "' align='center'>" + i + "</td>";
+                    } else {
+                        col += "<td data-pos='" + space + "'></td>";
+                    }
+                    space++;
+                }
+                $("#board").append("<tr>" + col + "</tr>");
+            }
+        });
+
+        $(document).ready(function () {
+            var space = 1;
+            for (var i = 0; i <= 10; i++) {
+                var col = "";
+                for (var j = 0; j <= 10; j++) {
+                    if (i === 0 && j !== 0) {
+                        col += "<td data-pos='" + space + "' align='center'>" + j + "</td>";
+                    } else if (j === 0 && i !== 0) {
+                        col += "<td data-pos='" + space + "' align='center'>" + i + "</td>";
+                    } else {
+                        col += "<td data-pos='" + space + "'></td>";
+                    }
+                    space++;
+                }
+                $("#enemy-board").append("<tr>" + col + "</tr>");
+            }
+        });
+
+        $(document).ready(function () {
+            $("#board td").click(function () {
+                var x = parseInt($(this).index());
+                var y = parseInt($(this).parent().index());
+
+                var cell = new Object();
+                cell.x = x;
+                cell.y = y;
+                cell.status = "RESERVED";
+                var list = new List();
+                list.push(cell);
+                var response = JSON.stringify(cell);
+
+                $(this).toggleClass('active');
+                $("#result").html("X: " + x + ", Y: " + y)
+            })
+        })
+    </script>
+    <script src="js/main.js"></script>
+    <link type="text/css" rel="stylesheet" href="css/board.css"/>
+</head>
+<body>
+<div id="result"></div>
+<form id="name-form">
+    <input type="text" placeholder="Type your name"/>
+    <button id="connect" type="submit">Connect</button>
+    <button id="disconnect" type="submit">Disconnect</button>
+</form>
+<div id="field" class="hidden">
+    <table id="board"></table>
+    <table id="enemy-board"></table>
+</div>
+</body>
+</html>
