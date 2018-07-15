@@ -1,6 +1,9 @@
 package com.epam.game.service;
 
-import com.epam.game.model.*;
+import com.epam.game.model.Cell;
+import com.epam.game.model.Field;
+import com.epam.game.model.Game;
+import com.epam.game.model.Shot;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,15 +32,18 @@ public class GameService {
 
     public Shot doShot(String player, Shot shot) {
         game.getFields().forEach(field -> {
-            if (field.getPlayer().equals(player)) {
+            if (!field.getPlayer().equals(player)) {
                 field.getCells().forEach(cell -> {
-                    if (cell.getX() == shot.getX() && cell.getY() == shot.getY()) {
-                        cell.setStatus(Cell.CellStatus.SHOT);
+                    if (cell.getX() == shot.getX() && cell.getY() == shot.getY() && cell.getStatus() == Cell.CellStatus.RESERVED) {
                         shot.setStatus(Shot.ShotStatus.SUCCESSFUL);
                     }
                 });
             }
         });
+
+        if (shot.getStatus() == Shot.ShotStatus.PENDING) {
+            shot.setStatus(Shot.ShotStatus.MISSED);
+        }
 
         return shot;
     }

@@ -39,3 +39,7 @@ table {
 .hidden {
     display: none;
 }
+
+.missed {
+    background-color: red;
+}

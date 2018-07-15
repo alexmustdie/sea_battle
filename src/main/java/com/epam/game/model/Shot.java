@@ -12,6 +12,6 @@ public class Shot {
     private ShotStatus status;
 
     public enum ShotStatus {
-        SUCCESSFUL, MISSED
+        SUCCESSFUL, MISSED, PENDING
     }
 }

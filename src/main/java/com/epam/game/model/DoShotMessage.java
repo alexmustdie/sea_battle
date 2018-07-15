@@ -5,14 +5,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AddShipsMessage {
+public class DoShotMessage {
 
     private String player;
-    private List<Cell> ships;
+    private Shot shot;
 }

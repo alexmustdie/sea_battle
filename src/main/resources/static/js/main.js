@@ -1,5 +1,6 @@
 var stompClient = null;
 var list = null;
+var game = null;
 
 function setConnected(connected) {
     if (connected) {
@@ -14,8 +15,24 @@ function connect() {
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function () {
         setConnected(true);
-        stompClient.subscribe("/topic/game")
+        stompClient.subscribe("/topic/game", onGameReceived);
+        stompClient.subscribe("/topic/shot", onShotReceived);
     });
+}
+
+function onGameReceived(game) {
+
+}
+
+function onShotReceived(shot) {
+    var receivedShot = JSON.parse(shot.body);
+
+    var cell = $("#enemy-board").children("tr").eq(receivedShot.y).children("td").eq(receivedShot.x);
+    if (receivedShot.status === "SUCCESSFUL") {
+        cell.toggleClass('active')
+    } else if (receivedShot.status === "MISSED") {
+        cell.toggleClass('missed')
+    }
 }
 
 function disconnect() {
@@ -31,6 +48,14 @@ function addShips(ships) {
         ships: ships
     };
     stompClient.send("/battle/game/add/ships", {}, JSON.stringify(addShipsMessage));
+}
+
+function doShot(shot) {
+    var doShotMessage = {
+        player: $("#name").val(),
+        shot: shot
+    };
+    stompClient.send("/battle/game/shot", {}, JSON.stringify(doShotMessage));
 }
 
 $(function () {
@@ -55,7 +80,17 @@ $(function () {
         }
         list.push(cell);
         $(this).toggleClass('active');
-//        $("#result").html("X: " + x + ", Y: " + y)
+    });
+
+    $("#enemy-board td").click(function () {
+        var x = parseInt($(this).index());
+        var y = parseInt($(this).parent().index());
+        var shot = {
+            x: x,
+            y: y,
+            status: "PENDING"
+        };
+        doShot(shot);
     });
 
     $("#add-ships").click(function () {
