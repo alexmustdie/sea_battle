@@ -10,14 +10,14 @@ public class GameService {
 
     private final Game game = new Game();
 
-    public Game addShips(String player, List<Ship> ships) {
+    public Game addShips(String player, List<Cell> ships) {
         if (game.getFields().size() < 2) {
             Field field = new Field(player);
-            field.getCells().forEach(cell -> ships.forEach(ship -> ship.getCells().forEach(shipCell -> {
+            field.getCells().forEach(cell -> ships.forEach(shipCell -> {
                 if (cell.getX() == shipCell.getX() && cell.getY() == shipCell.getY()) {
                     cell.setStatus(shipCell.getStatus());
                 }
-            })));
+            }));
             game.getFields().add(field);
             if (game.getFields().size() == 2) {
                 game.setStatus(Game.GameStatus.STARTED);

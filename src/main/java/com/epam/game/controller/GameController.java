@@ -1,15 +1,14 @@
 package com.epam.game.controller;
 
+import com.epam.game.model.AddShipsMessage;
 import com.epam.game.model.Game;
-import com.epam.game.model.Ship;
 import com.epam.game.model.Shot;
 import com.epam.game.service.GameService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
@@ -19,13 +18,13 @@ public class GameController {
 
     @MessageMapping("/game/add/ships")
     @SendTo("/topic/game")
-    public Game addShips(String player, List<Ship> ships) {
-        return gameService.addShips(player, ships);
+    public Game addShips(AddShipsMessage addShipsMessage) {
+        return gameService.addShips(addShipsMessage.getPlayer(), addShipsMessage.getShips());
     }
 
     @MessageMapping("/game/shot")
     @SendTo("/topic/game")
-    public Shot doShot(String player, Shot shot) {
-        return gameService.doShot(player, shot);
+    public Shot doShot(Shot shot, SimpMessageHeaderAccessor headerAccessor) {
+        return gameService.doShot(headerAccessor.getSessionAttributes().get("player").toString(), shot);
     }
 }

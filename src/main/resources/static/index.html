@@ -41,37 +41,19 @@
                 $("#enemy-board").append("<tr>" + col + "</tr>");
             }
         });
-
-        $(document).ready(function () {
-            $("#board td").click(function () {
-                var x = parseInt($(this).index());
-                var y = parseInt($(this).parent().index());
-
-                var cell = new Object();
-                cell.x = x;
-                cell.y = y;
-                cell.status = "RESERVED";
-                var list = new List();
-                list.push(cell);
-                var response = JSON.stringify(cell);
-
-                $(this).toggleClass('active');
-                $("#result").html("X: " + x + ", Y: " + y)
-            })
-        })
     </script>
     <script src="js/main.js"></script>
     <link type="text/css" rel="stylesheet" href="css/board.css"/>
 </head>
 <body>
-<div id="result"></div>
 <form id="name-form">
-    <input type="text" placeholder="Type your name"/>
+    <input id="name" type="text" placeholder="Type your name"/>
     <button id="connect" type="submit">Connect</button>
     <button id="disconnect" type="submit">Disconnect</button>
 </form>
 <div id="field" class="hidden">
     <table id="board"></table>
+    <button id="add-ships" type="submit">Add ships</button>
     <table id="enemy-board"></table>
 </div>
 </body>
