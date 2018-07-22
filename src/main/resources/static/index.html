@@ -1,60 +1,69 @@
 <!DOCTYPE html>
-<head>
-    <meta charset="UTF-8">
-    <title>Sea battle</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.js" charset="utf-8"></script>
-    <script>
-        $(document).ready(function () {
-            var space = 1;
-            for (var i = 0; i <= 10; i++) {
-                var col = "";
-                for (var j = 0; j <= 10; j++) {
-                    if (i === 0 && j !== 0) {
-                        col += "<td data-pos='" + space + "' align='center'>" + j + "</td>";
-                    } else if (j === 0 && i !== 0) {
-                        col += "<td data-pos='" + space + "' align='center'>" + i + "</td>";
-                    } else {
-                        col += "<td data-pos='" + space + "'></td>";
-                    }
-                    space++;
-                }
-                $("#board").append("<tr>" + col + "</tr>");
-            }
-        });
+    <head>
+        <meta charset="UTF-8">
+        <title>Sea battle</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.js" charset="utf-8"></script>
+        <script>
+            $(document).ready(function () {
 
-        $(document).ready(function () {
-            var space = 1;
-            for (var i = 0; i <= 10; i++) {
-                var col = "";
-                for (var j = 0; j <= 10; j++) {
-                    if (i === 0 && j !== 0) {
-                        col += "<td data-pos='" + space + "' align='center'>" + j + "</td>";
-                    } else if (j === 0 && i !== 0) {
-                        col += "<td data-pos='" + space + "' align='center'>" + i + "</td>";
-                    } else {
-                        col += "<td data-pos='" + space + "'></td>";
+                $("#name-form").css({"opacity": 1});
+
+                var space = 1;
+
+                for (var i = 0; i <= 10; i++) {
+
+                    var col = "";
+
+                    for (var j = 0; j <= 10; j++) {
+                        if (i === 0 && j !== 0) {
+                            col += "<td data-pos='" + space + "' align='center'>" + j + "</td>";
+                        } else if (j === 0 && i !== 0) {
+                            col += "<td data-pos='" + space + "' align='center'>" + i + "</td>";
+                        } else {
+                            col += "<td data-pos='" + space + "'></td>";
+                        }
+                        space++;
                     }
-                    space++;
+
+                    $("#board").append("<tr>" + col + "</tr>");
                 }
-                $("#enemy-board").append("<tr>" + col + "</tr>");
-            }
-        });
-    </script>
-    <script src="js/main.js"></script>
-    <link type="text/css" rel="stylesheet" href="css/board.css"/>
-</head>
-<body>
-<form id="name-form">
-    <input id="name" type="text" placeholder="Type your name"/>
-    <button id="connect" type="submit">Connect</button>
-    <button id="disconnect" type="submit">Disconnect</button>
-</form>
-<div id="field" class="hidden">
-    <table id="board"></table>
-    <button id="add-ships" type="submit">Add ships</button>
-    <table id="enemy-board"></table>
-</div>
-</body>
+
+                var space = 1;
+
+                for (var i = 0; i <= 10; i++) {
+
+                    var col = "";
+
+                    for (var j = 0; j <= 10; j++) {
+                        if (i === 0 && j !== 0) {
+                            col += "<td data-pos='" + space + "' align='center'>" + j + "</td>";
+                        } else if (j === 0 && i !== 0) {
+                            col += "<td data-pos='" + space + "' align='center'>" + i + "</td>";
+                        } else {
+                            col += "<td data-pos='" + space + "'></td>";
+                        }
+                        space++;
+                    }
+
+                    $("#enemy-board").append("<tr>" + col + "</tr>");
+                }
+            });
+        </script>
+        <script src="js/main.js"></script>
+        <link type="text/css" rel="stylesheet" href="css/board.css"/>
+    </head>
+    <body>
+        <form id="name-form">
+            <input id="name" type="text" placeholder="Type your name"/>
+            <button id="connect" type="submit">Start</button>
+            <!--<button id="disconnect" type="submit">Stop</button>-->
+        </form>
+        <div id="field">
+            <!--<button id="add-ships" type="submit">Add ships</button>-->
+            <table id="board"></table>
+            <table id="enemy-board"></table>
+        </div>
+    </body>
 </html>

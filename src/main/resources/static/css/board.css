@@ -6,26 +6,35 @@
 table {
     border-collapse: collapse;
     border-spacing: 0;
+    border: 2px solid #3B8686;
+    border-radius: 5px;
+}
+
+#name-form,
+#field {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#name-form {
+    z-index: 1;
+}
+
+#field {
+    z-index: 0;
+    transition-delay: 0.5s;
 }
 
 #board {
-    padding: 0px;
-    margin: 300px 0px 0px 50px;
-    border: 2px solid #181818;
+    margin-right: 20px;
+    float: left;
 }
 
-#board tr td {
-    width: 30px;
-    height: 30px;
-    border: black 1px solid
-}
-
-#enemy-board {
-    padding: 0px;
-    margin: -340px 0px 0px 500px;
-    border: 2px solid #181818;
-}
-
+#board tr td,
 #enemy-board tr td {
     width: 30px;
     height: 30px;
@@ -33,13 +42,9 @@ table {
 }
 
 .active {
-    background-color: orange;
-}
-
-.hidden {
-    display: none;
+    background-color: #00B9BD;
 }
 
 .missed {
-    background-color: red;
+    background-color: #F63700;
 }
